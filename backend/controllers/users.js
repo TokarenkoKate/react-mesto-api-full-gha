@@ -16,7 +16,7 @@ module.exports.getUser = (req, res, next) => {
   User.findById(req.params.userId).exec()
     .then((user) => {
       if (user) {
-        res.send({ data: user });
+        res.send(user);
       } else {
         throw new NotFoundError('Пользователь по указанному _id не найден.');
       }
@@ -40,14 +40,11 @@ module.exports.createUser = (req, res, next) => {
       name, about, avatar, email, password: hash,
     }))
     .then((user) => res.send({
-      data:
-      {
         name: user.name,
         about: user.about,
         avatar: user.avatar,
         email: user.email,
-      },
-    }))
+      }))
     .catch((err) => {
       if (err.code === 11000) {
         next(new UserExistsError('Пользователь с таким email уже существует.'));
@@ -92,7 +89,7 @@ module.exports.updateProfile = (req, res, next) => {
     new: true,
     runValidators: true,
   })
-    .then((user) => res.send({ data: user }))
+    .then((user) => res.send(user))
     .catch((err) => {
       if (err.name === 'ValidationError') {
         next(new IncorrectDataError('Некорректные данные при создании карточки.'));
@@ -109,7 +106,7 @@ module.exports.updateAvatar = (req, res, next) => {
     new: true,
     runValidators: true,
   })
-    .then((user) => res.send({ data: user }))
+    .then((user) => res.send(user))
     .catch((err) => {
       if (err.name === 'ValidationError') {
         next(new IncorrectDataError('Некорректные данные при создании карточки.'));

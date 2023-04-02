@@ -1,0 +1,23 @@
+.register__signin {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    padding-top: 15px;
+    font-family: 'Inter';
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 1.21;
+    text-align: center;
+    color: #fff;
+}
+
+.register__signin p {
+    margin: 0;
+}
+
+@media screen and (max-width: 582px) {
+    .register__signin {
+        padding-top: 20px;
+    }
+}

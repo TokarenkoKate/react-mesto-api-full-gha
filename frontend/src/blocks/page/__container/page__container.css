@@ -1,0 +1,23 @@
+.page__container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  height: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 45px 40px 60px;
+  box-sizing: border-box;
+}
+
+@media screen and (max-width: 768px) {
+  .page__container {
+    padding: 28px 19px 36px;
+  }
+}
+
+@media screen and (max-width: 582px) {
+  .page__container {
+    padding: 28px 0 36px;
+  }
+}
+

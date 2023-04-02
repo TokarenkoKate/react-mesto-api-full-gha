@@ -1,0 +1,12 @@
+.logo__image {
+  display: block;
+  max-width: 142px;
+  max-height: 33px;
+}
+
+@media screen and (max-width: 582px) {
+  .logo__image {
+    max-width: 104px;
+    max-height: 25px;
+  }
+}

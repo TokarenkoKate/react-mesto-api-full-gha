@@ -1,0 +1,38 @@
+.burger {
+    padding-right: 30px;
+    width: 24px; 
+    height: 21px;
+    display: none;
+    cursor: pointer;
+}
+
+.burger__bar1,
+.burger__bar2,
+.burger__bar3 {
+    width: 24px;
+    height: 3px;
+    background-color: #fff;
+    transition: 0.4s;
+}
+
+.burger__bar2, .burger__bar3 {
+    margin: 6px 0;
+}
+
+@media screen and (max-width: 582px) {
+    .burger {
+        display: block;
+    }
+}
+
+.header.active .burger__bar1 {
+    transform: translate(0, 9px) rotate(-45deg);
+}
+
+.header.active .burger__bar2 {
+    opacity: 0;
+}
+
+.header.active .burger__bar3 {
+    transform: translate(0, -9px) rotate(45deg);
+}

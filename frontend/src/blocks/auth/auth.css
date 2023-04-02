@@ -1,0 +1,15 @@
+.auth {
+  min-height: 400px;
+  padding-top: 50px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+@media screen and (max-width: 582px) {
+  .auth {
+      padding-top: 40px;
+      min-height: 345px;
+  }
+}

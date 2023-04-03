@@ -10,6 +10,6 @@
 
 IP 158.160.40.24
 
-Frontend: https://tokarenko.nomoredomains.work
+Frontend https://tokarenko.nomoredomains.work
 
-Backend: https://api.tokarenko.nomoredomains.work
+Backend https://api.tokarenko.nomoredomains.work

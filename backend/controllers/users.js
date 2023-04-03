@@ -1,3 +1,4 @@
+const { NODE_ENV, JWT_SECRET } = process.env;
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const NotFoundError = require('../errors/not-found-err');
@@ -5,7 +6,6 @@ const IncorrectDataError = require('../errors/incorrect-data-err');
 const UserExistsError = require('../errors/user-exists-err');
 const IncorrectAuthDataError = require('../errors/incorrect-auth-data-err');
 const User = require('../models/user');
-const { NODE_ENV, JWT_SECRET } = process.env;
 
 module.exports.getUsers = (req, res, next) => {
   User.find({})
@@ -41,11 +41,11 @@ module.exports.createUser = (req, res, next) => {
       name, about, avatar, email, password: hash,
     }))
     .then((user) => res.send({
-        name: user.name,
-        about: user.about,
-        avatar: user.avatar,
-        email: user.email,
-      }))
+      name: user.name,
+      about: user.about,
+      avatar: user.avatar,
+      email: user.email,
+    }))
     .catch((err) => {
       if (err.code === 11000) {
         next(new UserExistsError('Пользователь с таким email уже существует.'));

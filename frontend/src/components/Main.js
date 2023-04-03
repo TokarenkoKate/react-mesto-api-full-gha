@@ -14,7 +14,7 @@ function Main({
 }) {
 
   const currentUser = useContext(CurrentUserContext);
-
+console.log(cardsList)
   return (
     <main className="main">
       <section className="profile">
@@ -41,7 +41,7 @@ function Main({
 
       <section className="content" aria-label="Карточки">
         <ul className="cards">
-          {cardsList.map((card) => (
+          {/* {cardsList && cardsList.map((card) => (
             <Card
               key={card._id}
               card={card}
@@ -49,7 +49,7 @@ function Main({
               onCardLike={onCardLike}
               onCardDelete={onCardDelete}
             />
-          ))}
+          ))} */}
         </ul>
       </section>
     </main>

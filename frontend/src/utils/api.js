@@ -5,7 +5,7 @@ class Api {
   }
 
   getUserInfo() {
-    return fetch(`${this._url}/v1/cohort-55/users/me`, {
+    return fetch(`${this._url}/users/me`, {
       headers: this._headers,
       method: 'GET'
     })
@@ -22,7 +22,7 @@ class Api {
   }
 
   editUserInfo(data) {
-    return fetch(`${this._url}/v1/cohort-55/users/me`, {
+    return fetch(`${this._url}/users/me`, {
       headers: this._headers,
       method: 'PATCH',
       body: JSON.stringify({
@@ -43,7 +43,7 @@ class Api {
   }
 
   editUserAvatar(data) {
-    return fetch(`${this._url}/v1/cohort-55/users/me/avatar`, {
+    return fetch(`${this._url}/users/me/avatar`, {
       headers: this._headers,
       body: JSON.stringify({
         avatar: data.avatar
@@ -63,7 +63,7 @@ class Api {
   }
 
   getInitialCards() {
-    return fetch(`${this._url}/v1/cohort-55/cards`, {
+    return fetch(`${this._url}/cards`, {
       headers: this._headers,
       method: 'GET'
     })
@@ -80,7 +80,7 @@ class Api {
   }
 
   addNewCard(data) {
-    return fetch(`${this._url}/v1/cohort-55/cards`, {
+    return fetch(`${this._url}/cards`, {
       headers: this._headers,
       method: 'POST',
       body: JSON.stringify({
@@ -103,7 +103,7 @@ class Api {
   changeLikeCardStatus(cardId, isLiked) {
     let method = isLiked ? 'PUT' : 'DELETE';
 
-    return fetch(`${this._url}/v1/cohort-55/cards/${cardId}/likes`, {
+    return fetch(`${this._url}/cards/${cardId}/likes`, {
       headers: this._headers,
       method: method
     })
@@ -120,7 +120,7 @@ class Api {
   }
 
   deleteCard(cardId) {
-    return fetch(`${this._url}/v1/cohort-55/cards/${cardId}`, {
+    return fetch(`${this._url}/cards/${cardId}`, {
       headers: this._headers,
       method: 'DELETE'
     })
@@ -138,9 +138,9 @@ class Api {
 }
 
 export const api = new Api({
-  url: 'https://nomoreparties.co',
+  url: 'https://api.tokarenko.nomoredomains.work',
   headers: {
-    authorization: 'abec103f-a78d-4f4a-9962-97b2716f17dc',
+    authorization: `Bearer ${localStorage.getItem('token')}`,
     'Content-Type': 'application/json'
   }
 });

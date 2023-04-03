@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const IncorrectAuthDataError = require('../errors/incorrect-auth-data-err');
+const { NODE_ENV, JWT_SECRET } = process.env;
 
 const extractBearerToken = (authorization) => authorization.replace('Bearer ', '');
 
@@ -14,7 +15,7 @@ module.exports = (req, res, next) => {
   let payload;
 
   try {
-    payload = jwt.verify(token, 'super-strong-secret');
+    payload = jwt.verify(token, NODE_ENV === 'production' ? JWT_SECRET : 'dev_secret');
   } catch (err) {
     next(new IncorrectAuthDataError('Необходима авторизация.'));
   }

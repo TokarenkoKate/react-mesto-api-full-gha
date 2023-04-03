@@ -34,29 +34,11 @@ function App() {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    handleTokenCheck();
-  }, []);
-
-  useEffect(() => {
-    {
-      isLoggedIn &&
-        setIsLoading(true);
-      isLoggedIn &&  Promise.all([api.getUserInfo(), api.getInitialCards()])
-          .then(([user, cards]) => {
-            setCurrentUser(user);
-            setCardsList(cards);
-            setIsLoading(false);
-          })
-          .catch(err => console.log(err.message))
-    }
-  }, [isLoggedIn]);
-
   const handleTokenCheck = () => {
     const token = localStorage.getItem('token');
     if (token) {
       auth.tokenCheck(token)
-        .then(({ data }) => {
+        .then((data) => {
           if (data) {
             setIsLoggedIn(true);
             setEmail(data.email);
@@ -89,7 +71,7 @@ function App() {
           setEmail(email);
           setIsLoggedIn(true);
           navigate('/', { replace: true });
-        }
+        } 
       })
       .catch((err) => console.log(err))
   };
@@ -171,6 +153,23 @@ function App() {
       })
       .catch((err) => console.log(err));
   }
+
+  useEffect(() => {
+    handleTokenCheck();
+  }, [isLoggedIn]);
+
+  useEffect(() => {
+    if (isLoggedIn) {  
+        setIsLoading(true);
+        Promise.all([api.getUserInfo(), api.getInitialCards()])
+          .then(([user, cards]) => {
+            setCurrentUser(user);
+            setCardsList(cards);
+            setIsLoading(false);
+          })
+          .catch(err => console.log(err.message))
+    }
+  }, [isLoggedIn]);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>

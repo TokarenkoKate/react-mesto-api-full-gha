@@ -1,10 +1,14 @@
-import { useContext } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 function Card({ card, onCardClick, onCardLike, onCardDelete }) {
   const currentUser = useContext(CurrentUserContext);
 
-  const isOwn = card.owner._id === currentUser._id;
+  const [isOwn, setIsOwn] = useState(false);
+
+  const checkOwnCard = () => {
+    setIsOwn(card.owner._id === currentUser._id || card.owner === currentUser._id);
+  };
 
   const handleDeleteClick = () => {
     onCardDelete(card);
@@ -19,6 +23,10 @@ function Card({ card, onCardClick, onCardLike, onCardDelete }) {
   const handleLikeClick = () => {
     onCardLike(card);
   };
+
+  useEffect(() => {
+    checkOwnCard();
+  }, [isOwn, card, currentUser]);
 
   return (
     <li className="card">

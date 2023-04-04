@@ -5,7 +5,7 @@ const IncorrectDataError = require('../errors/incorrect-data-err');
 const UserExistsError = require('../errors/user-exists-err');
 const IncorrectAuthDataError = require('../errors/incorrect-auth-data-err');
 const User = require('../models/user');
-const { NODE_ENV, JWT_SECRET } = process.env;
+const { NODE_ENV, JWT_SECRET } = require('./config');
 
 module.exports.getUsers = (req, res, next) => {
   User.find({})
@@ -74,13 +74,7 @@ module.exports.login = (req, res, next) => {
       const token = jwt.sign({ _id: user.id }, NODE_ENV === 'production' ? JWT_SECRET : 'dev_secret', { expiresIn: '7d' });
       res.send({ token });
     })
-    .catch((err) => {
-      if (err.name === 'ValidationError') {
-        next(new IncorrectDataError('Некорректные данные при создании карточки.'));
-      } else {
-        next(err);
-      }
-    });
+    .catch(next);
 };
 
 module.exports.updateProfile = (req, res, next) => {
@@ -124,11 +118,5 @@ module.exports.getCurrentUser = (req, res, next) => {
       next(new NotFoundError('Пользователь не найден.'));
     })
     .then((user) => res.send(user))
-    .catch((err) => {
-      if (err.name === 'ValidationError') {
-        next(new IncorrectDataError('Некорректные данные при создании карточки.'));
-      } else {
-        next(err);
-      }
-    });
+    .catch(next);
 };

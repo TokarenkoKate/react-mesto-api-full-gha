@@ -2,7 +2,6 @@ require('dotenv').config();
 const { errors } = require('celebrate');
 const express = require('express');
 const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 const cors = require('cors');
@@ -10,15 +9,15 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 const routes = require('./routes');
 const errorHandler = require('./middlewares/error-handler');
 
-const { PORT = 3000, BASE_PATH } = process.env;
+const { PORT, DB_ADDRESS } = require('./config');
 
 const app = express();
 app.use(cors());
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-mongoose.connect('mongodb://localhost:27017/mestodb', {
+mongoose.connect(DB_ADDRESS, {
   useNewUrlParser: true,
 });
 
@@ -39,16 +38,16 @@ app.get('/crash-test', () => {
   setTimeout(() => {
     throw new Error('Сервер сейчас упадёт');
   }, 0);
-}); 
+});
 
 app.use(routes);
 
-app.use(errorLogger); 
+app.use(errorLogger);
 
 app.use(errors());
 
 app.use(errorHandler);
 
 app.listen(PORT, () => {
-  console.log(BASE_PATH);
+  console.log(DB_ADDRESS);
 });

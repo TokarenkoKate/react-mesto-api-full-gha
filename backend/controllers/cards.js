@@ -13,7 +13,7 @@ module.exports.getCards = (req, res, next) => {
 module.exports.createCard = (req, res, next) => {
   const { name, link } = req.body;
   Card.create({ name, link, owner: req.user })
-    .then((card) => res.send(card))
+    .then((card) => res.status(201).send(card))
     .catch((err) => {
       if (err.name === 'ValidationError') {
         next(new IncorrectDataError('Некорректные данные при создании карточки.'));
@@ -29,13 +29,13 @@ module.exports.deleteCard = (req, res, next) => {
     .then((card) => {
       if (card) {
         if (req.user._id === card.owner.id) {
-          card.deleteOne()
+          return card.deleteOne()
             .then(() => res.send({ message: 'Карточка удалена.' }));
         } else {
           next(new ForbiddenAccess('Вы не можете удалить чужую карточку'));
         }
       } else {
-        next(new NotFoundError('Пользователь по указанному _id не найден.'));
+        next(new NotFoundError('Карточка по указанному _id не найдена.'));
       }
     })
     .catch(next);

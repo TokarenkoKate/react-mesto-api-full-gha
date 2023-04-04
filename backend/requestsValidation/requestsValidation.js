@@ -12,4 +12,4 @@ const requestsValidation = {
   password: Joi.string().required(),
 };
 
-module.exports(requestsValidation);
+module.exports = requestsValidation;

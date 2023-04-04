@@ -5,7 +5,7 @@ const IncorrectDataError = require('../errors/incorrect-data-err');
 const UserExistsError = require('../errors/user-exists-err');
 const IncorrectAuthDataError = require('../errors/incorrect-auth-data-err');
 const User = require('../models/user');
-const { NODE_ENV, JWT_SECRET } = require('./config');
+const { NODE_ENV, JWT_SECRET } = require('../config');
 
 module.exports.getUsers = (req, res, next) => {
   User.find({})
@@ -13,22 +13,30 @@ module.exports.getUsers = (req, res, next) => {
     .catch(next);
 };
 
-module.exports.getUser = (req, res, next) => {
-  User.findById(req.params.userId).exec()
+const getUserById = (req, res, next, id) => {
+  return User.findById(id).exec()
     .then((user) => {
       if (user) {
-        res.send(user);
+        return res.send(user);
       } else {
         throw new NotFoundError('Пользователь по указанному _id не найден.');
       }
     })
     .catch((err) => {
-      if (err.name === 'CastError') {
+      if (err instanceof mongoose.Error.CastError) {
         next(new IncorrectDataError('Некорректный _id пользователя'));
       } else {
         next(err);
       }
     });
+};
+
+module.exports.getUser = (req, res, next) => {
+  return getUserById(req, res, next, req.params.userId);
+};
+
+module.exports.getCurrentUser = (req, res, next) => {
+  return getUserById(req, res, next, req.user._id);
 };
 
 module.exports.createUser = (req, res, next) => {
@@ -41,15 +49,15 @@ module.exports.createUser = (req, res, next) => {
       name, about, avatar, email, password: hash,
     }))
     .then((user) => res.send({
-        name: user.name,
-        about: user.about,
-        avatar: user.avatar,
-        email: user.email,
-      }))
+      name: user.name,
+      about: user.about,
+      avatar: user.avatar,
+      email: user.email,
+    }))
     .catch((err) => {
       if (err.code === 11000) {
         next(new UserExistsError('Пользователь с таким email уже существует.'));
-      } else if (err.name === 'ValidationError') {
+      } else if (err instanceof mongoose.Error.ValidationError) {
         next(new IncorrectDataError('Некорректные данные при создании карточки.'));
       } else {
         next(err);
@@ -77,46 +85,30 @@ module.exports.login = (req, res, next) => {
     .catch(next);
 };
 
-module.exports.updateProfile = (req, res, next) => {
-  const { name, about } = req.body;
-
-  User.findByIdAndUpdate(req.user._id, { name, about }, {
+const updateUserProfile = (req, res, next, data) => {
+  return User.findByIdAndUpdate(req.user._id, data, {
     new: true,
     runValidators: true,
   })
     .then((user) => res.send(user))
     .catch((err) => {
-      if (err.name === 'ValidationError') {
+      if (err instanceof mongoose.Error.ValidationError) {
         next(new IncorrectDataError('Некорректные данные при создании карточки.'));
       } else {
         next(err);
       }
     });
+}
+
+module.exports.updateProfile = (req, res, next) => {
+  const { name, about } = req.body;
+
+  updateUserProfile(req, res, next, { name, about });
 };
 
 module.exports.updateAvatar = (req, res, next) => {
   const { avatar } = req.body;
 
-  User.findByIdAndUpdate(req.user._id, { avatar }, {
-    new: true,
-    runValidators: true,
-  })
-    .then((user) => res.send(user))
-    .catch((err) => {
-      if (err.name === 'ValidationError') {
-        next(new IncorrectDataError('Некорректные данные при создании карточки.'));
-      } else {
-        next(err);
-      }
-    });
+  updateUserProfile(req, res, next, { avatar });
 };
 
-// GET /users/me
-module.exports.getCurrentUser = (req, res, next) => {
-  User.findById(req.user._id)
-    .orFail(() => {
-      next(new NotFoundError('Пользователь не найден.'));
-    })
-    .then((user) => res.send(user))
-    .catch(next);
-};

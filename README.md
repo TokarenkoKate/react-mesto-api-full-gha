@@ -8,8 +8,8 @@
 
 ## Ссылки на проект
 
-IP-адрес x.x.x.x
+IP 158.160.40.24
 
-Frontend https://...
+Frontend https://tokarenko.nomoredomains.work
 
-Backend https://...
+Backend https://api.tokarenko.nomoredomains.work

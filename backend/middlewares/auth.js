@@ -1,3 +1,4 @@
+const { NODE_ENV, JWT_SECRET } = process.env;
 const jwt = require('jsonwebtoken');
 const IncorrectAuthDataError = require('../errors/incorrect-auth-data-err');
 const { NODE_ENV, JWT_SECRET } = require('../config');

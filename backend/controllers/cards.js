@@ -41,10 +41,10 @@ module.exports.deleteCard = (req, res, next) => {
     .catch(next);
 };
 
-module.exports.likeCard = (req, res, next) => {
+const updateLike = (req, res, next, action) => {
   Card.findByIdAndUpdate(
     req.params.cardId,
-    { $addToSet: { likes: req.user._id } },
+    { [action]: { likes: req.user._id } },
     { new: true },
   ).populate(['owner', 'likes'])
     .then((card) => {
@@ -57,18 +57,10 @@ module.exports.likeCard = (req, res, next) => {
     .catch(next);
 };
 
-module.exports.dislikeCard = (req, res, next) => {
-  Card.findByIdAndUpdate(
-    req.params.cardId,
-    { $pull: { likes: req.user._id } },
-    { new: true },
-  ).populate(['owner', 'likes'])
-    .then((card) => {
-      if (card) {
-        res.send(card);
-      } else {
-        next(new NotFoundError('Карточка по указанному _id не найдена.'));
-      }
-    })
-    .catch(next);
-};
+  module.exports.likeCard = (req, res, next) => {
+    updateLike(req, res, next, '$addToSet');
+  };
+
+  module.exports.dislikeCard = (req, res, next) => {
+    updateLike(req, res, next, '$pull');
+  };

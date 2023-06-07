@@ -1,0 +1,21 @@
+.footer__button {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.22;
+  background: none;
+  border: none;
+  outline: none;
+  color: #ffffff;
+}
+
+.footer__button_active {
+  text-decoration: underline;
+}
+
+@media screen and (max-width: 582px) {
+  .footer__button {
+  font-size: 14px;
+  }
+}
+

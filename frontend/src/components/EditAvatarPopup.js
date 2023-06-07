@@ -1,21 +1,23 @@
 import { useState, useEffect } from 'react';
 import { useFormWithValidation } from './../utils/form';
+import { useTranslation } from 'react-i18next';
 import PopupWithForm from './PopupWithForm';
 
 function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
-  const [buttonText, setButtonText] = useState('Сохранить');
+  const { t } = useTranslation();
+  const [buttonText, setButtonText] = useState(t('save'));
 
   const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation();
 
   useEffect(() => {
-    setButtonText('Сохранить');
+    setButtonText(t('save'));
     resetForm();
   }, [isOpen]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    setButtonText('Загрузка...');
+    setButtonText(t('loading'));
     
     const { avatar } = values;
     onUpdateAvatar({ avatar } );
@@ -24,7 +26,7 @@ function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
   return (
     <PopupWithForm
       name='edit-avatar'
-      title='Обновить аватар'
+      title={t('update_avatar')}
       buttonText={buttonText}
       isOpen={isOpen}
       onClose={onClose}
@@ -35,7 +37,7 @@ function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
         className={`form__input ${!isValid ? 'form__input_state_error' : ''}`}
         name="avatar"
         id="avatar-input"
-        placeholder="Введите ссылку на новый аватар:"
+        placeholder={t('enter_link')}
         value={values?.avatar || ''}
         onChange={handleChange}
         required />

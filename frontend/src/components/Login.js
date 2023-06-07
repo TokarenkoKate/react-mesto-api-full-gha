@@ -1,15 +1,17 @@
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import AuthForm from './AuthForm';
 
 const Login = ({ handleAuthorize }) => {
-  const [buttonText, setButtonText] = useState('Войти');
+  const { t } = useTranslation();
+  const [buttonText, setButtonText] = useState(t('sign_in'));
 
   useEffect(() => {
-    setButtonText('Войти');
+    setButtonText(t('sign_in'));
   }, [handleAuthorize]);
 
   const handleSubmit = (values) => {
-    setButtonText('Загрузка...');
+    setButtonText(t('loading'));
 
     const { email, password } = values;
     handleAuthorize(email, password);
@@ -18,7 +20,7 @@ const Login = ({ handleAuthorize }) => {
   return (
     <div className='login'>
       <h2 className='login__title'>
-        Вход
+        {t('sign_in')}
       </h2>
       <AuthForm
         buttonText={buttonText}

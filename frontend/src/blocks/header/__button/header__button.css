@@ -1,4 +1,5 @@
 .header__button {
+    min-width: 81px;
     padding: 0;
     background: transparent;
     border: none;

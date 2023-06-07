@@ -1,21 +1,23 @@
 import PopupWithForm from "./PopupWithForm";
+import { useTranslation } from 'react-i18next';
 import { useState, useEffect } from 'react';
 
 function DeleteCardPopup({ isOpen, onClose, onDeleteCard, deletedCard }) {
-  const [buttonText, setButtonText] = useState('Да');
+  const { t } = useTranslation();
+  const [buttonText, setButtonText] = useState(t('yes'));
 
-  useEffect(() => setButtonText('Да'), [isOpen]);
+  useEffect(() => setButtonText(t('yes')), [isOpen]);
 
   function handleSubmit(e) {
     e.preventDefault();
-    setButtonText('Удаление...');
+    setButtonText(t('deleting'));
     onDeleteCard(deletedCard);
   }
 
   return (
     <PopupWithForm
       name='delete-card'
-      title='Вы уверены?'
+      title={t('are_sure')}
       buttonText={buttonText}
       isOpen={isOpen}
       onClose={onClose}

@@ -1,7 +1,8 @@
+import { useTranslation } from 'react-i18next';
 import { useFormWithValidation } from "../utils/form";
 
 const AuthForm = ({ buttonText, handleSubmit }) => {
-
+  const { t } = useTranslation();
   const { values, handleChange, errors, isValid } = useFormWithValidation();
 
   const handleSubmitForm = (e) => {
@@ -28,7 +29,7 @@ const AuthForm = ({ buttonText, handleSubmit }) => {
           name='password'
           type='password'
           className={`auth__input ${errors?.password ? 'auth__input_state_error' : ''}`}
-          placeholder='Пароль'
+          placeholder={t('password')}
           value={values?.password || ''}
           onChange={handleChange}
           minLength={3}

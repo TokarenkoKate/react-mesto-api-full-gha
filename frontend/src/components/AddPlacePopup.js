@@ -1,21 +1,23 @@
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useFormWithValidation } from './../utils/form';
 import PopupWithForm from './PopupWithForm';
 
 function AddPlacePopup({ isOpen, onClose, onAddNewPlace }) {
-  const [buttonText, setButtonText] = useState('Создать');
+  const { t } = useTranslation();
+  const [buttonText, setButtonText] = useState(t('create'));
 
   const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation();
 
   useEffect(() => {
-    setButtonText('Создать');
+    setButtonText(t('create'));
     resetForm();
   }, [isOpen]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    setButtonText('Загрузка...');
+    setButtonText(t('loading'));
     const { name, link } = values;
     onAddNewPlace({ name, link });
   };
@@ -23,7 +25,7 @@ function AddPlacePopup({ isOpen, onClose, onAddNewPlace }) {
   return (
     <PopupWithForm
       name='add-card'
-      title='Новое место'
+      title={t('new_place')}
       buttonText={buttonText}
       isOpen={isOpen}
       onClose={onClose}
@@ -34,7 +36,7 @@ function AddPlacePopup({ isOpen, onClose, onAddNewPlace }) {
         className={`form__input ${!isValid ? 'form__input_state_error' : ''}`}
         name="name"
         id="place-name-input"
-        placeholder="Название:"
+        placeholder={t('place_name')}
         value={values?.name || ''}
         onChange={handleChange}
         minLength={3}
@@ -47,7 +49,7 @@ function AddPlacePopup({ isOpen, onClose, onAddNewPlace }) {
         className={`form__input ${!isValid ? 'form__input_state_error' : ''}`}
         name="link"
         id="link-input"
-        placeholder="Ссылка на изображение:"
+        placeholder={t('image_link')}
         value={values?.link || ''}
         onChange={handleChange}
         required />

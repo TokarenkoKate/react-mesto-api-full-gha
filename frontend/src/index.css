@@ -69,6 +69,7 @@
 
 @import url(blocks/footer/footer.css);
 @import url(blocks/footer/__copyright/footer__copyright.css);
+@import url(blocks/footer/__button//footer__button.css);
 
 @import url(blocks/register/register.css);
 @import url(blocks/register/__title/register__title.css);
@@ -88,3 +89,7 @@
 @import url(blocks/auth/__inputs-container/auth__inputs-container.css);
 
 @import url(blocks/spinner/spinner.css);
+
+@import url(blocks/loading-page/loading-page.css);
+@import url(blocks/loading-page/__header/loading-page__header.css);
+@import url(blocks/loading-page/__title/loading-page__title.css);

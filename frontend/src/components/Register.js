@@ -1,16 +1,18 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import AuthForm from './AuthForm';
 
 const Register = ({ handleRegister }) => {
-  const [buttonText, setButtonText] = useState('Зарегистрироваться');
+  const { t } = useTranslation();
+  const [buttonText, setButtonText] = useState(t('sign_up'));
 
   useEffect(() => {
-    setButtonText('Зарегистрироваться')
+    setButtonText(t('sign_up'))
   }, [handleRegister]);
 
   const handleSubmit = (values) => {
-    setButtonText('Загрузка...');
+    setButtonText(t('loading'));
 
     const { email, password } = values;
     handleRegister(email, password);
@@ -18,14 +20,14 @@ const Register = ({ handleRegister }) => {
 
   return (
     <div className='register'>
-      <h2 className='register__title'>Регистрация</h2>
+      <h2 className='register__title'>{t('signing_up')}</h2>
       <AuthForm
         buttonText={buttonText}
         handleSubmit={handleSubmit}
       />
       <div className='register__signin'>
-        <p>Уже зарегистрированы?</p>
-        <Link to='/signin' className='register__login-link'>Войти</Link>
+        <p>{t('already_signed_up')}</p>
+        <Link to='/signin' className='register__login-link'>{t('sign_in')}</Link>
       </div>
     </div>
   )

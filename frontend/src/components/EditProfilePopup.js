@@ -1,23 +1,25 @@
 import { useState, useContext, useEffect } from 'react';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import { useFormWithValidation } from './../utils/form';
+import { useTranslation } from 'react-i18next';
 import PopupWithForm from "./PopupWithForm";
 
 function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
+  const { t } = useTranslation();
   const currentUser = useContext(CurrentUserContext);
-  const [buttonText, setButtonText] = useState('Сохранить');
+  const [buttonText, setButtonText] = useState(t('save'));
 
   const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation();
 
   useEffect(() => {
-    setButtonText('Сохранить');
+    setButtonText(t('save'));
     resetForm({name: currentUser.name, about: currentUser.about});
   }, [currentUser, isOpen]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    setButtonText('Загрузка...');
+    setButtonText(t('loading'));
 
     const { name, about } = values;
     onUpdateUser({ name, about });
@@ -26,7 +28,7 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
   return (
     <PopupWithForm
       name='edit-profile'
-      title='Редактировать профиль'
+      title={t('edit_profile')}
       buttonText={buttonText}
       isOpen={isOpen}
       onClose={onClose}
@@ -37,7 +39,7 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
         className={`form__input ${!isValid ? 'form__input_state_error' : ''}`}
         name="name"
         id="name-input"
-        placeholder="Введите имя:"
+        placeholder={t('enter_name')}
         onChange={handleChange}
         value={values?.name || ''}
         minLength={3}
@@ -50,7 +52,7 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
         className={`form__input ${!isValid ? 'form__input_state_error' : ''}`}
         name="about"
         id="about-input"
-        placeholder="Введите информацию о себе:"
+        placeholder={t('enter_about')}
         onChange={handleChange}
         value={values?.about || ''}
         minLength={3}

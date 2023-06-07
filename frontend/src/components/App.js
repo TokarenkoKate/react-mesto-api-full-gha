@@ -55,6 +55,8 @@ function App() {
           }
         })
         .catch((err) => console.log(err))
+    } else {
+      setIsLoading(false)
     }
   }
 

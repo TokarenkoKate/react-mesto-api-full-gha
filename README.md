@@ -4,6 +4,5 @@ Repository for the [Mesto](https://tokarenko.nomoredomains.work) project applica
 
 ## Project links
 
-Frontend https://tokarenko.nomoredomains.work
-
-Backend https://api.tokarenko.nomoredomains.work
+[Frontend](https://tokarenko.nomoredomains.work/signin)
+[Backend](https://api.tokarenko.nomoredomains.work)

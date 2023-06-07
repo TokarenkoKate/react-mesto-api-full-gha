@@ -1,18 +1,17 @@
-[![Tests](../../actions/workflows/tests-13-sprint.yml/badge.svg)](../../actions/workflows/tests-13-sprint.yml) [![Tests](../../actions/workflows/tests-14-sprint.yml/badge.svg)](../../actions/workflows/tests-14-sprint.yml)
-# Проект Mesto фронтенд + бэкенд
+# Mesto Russia - Travel App: backend
 
-Данная работа является проектным заданием для курса ["Веб-разработчик" Яндекс Практикума](https://practicum.yandex.ru/web/), спринт 14.
+This work is a project assignment for the course ["Web Developer" of Yandex Practicum](https://practicum.yandex.ru/web/), Sprint 13.
 
-## Директории
+## Directories
 
-`/routes` — папка с файлами роутера  
-`/controllers` — папка с файлами контроллеров пользователя и карточки   
-`/models` — папка с файлами описания схем пользователя и карточки  
+`/routes' — folder with router files
+`/controllers' — folder with the files of the user's controllers and the card
+`/models' — folder with files describing the user's schemes and cards
 
-## Запуск проекта
+## Project launch
 
-`npm run start` — запускает сервер   
-`npm run dev` — запускает сервер с hot-reload
+`npm run start' — starts the server
+`npm run dev' — starts the server with hot-reload
 
-## Использованные технологии.
+## Used technologies.
 Node.js, express.js, MongoDB
